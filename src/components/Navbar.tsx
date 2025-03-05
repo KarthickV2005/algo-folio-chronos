@@ -88,7 +88,7 @@ const Navbar = () => {
           "fixed inset-x-0 top-[64px] p-4 dark:bg-gray-900/95 bg-white/95 backdrop-blur-xl border-b z-40 md:hidden shadow-lg",
           "transition-all duration-300 ease-in-out transform",
           mobileMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none",
-          dark ? "border-gray-800" : "border-gray-200"
+          theme === "dark" ? "border-gray-800" : "border-gray-200"
         )}
       >
         <div className="flex flex-col space-y-3">
