@@ -1,13 +1,15 @@
 
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/components/ThemeProvider";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,7 +28,9 @@ const Navbar = () => {
     <nav 
       className={cn(
         "fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4 transition-all duration-300",
-        scrolled ? "bg-white/80 backdrop-blur-xl shadow-sm" : "bg-transparent"
+        scrolled 
+          ? "dark:bg-gray-900/80 dark:backdrop-blur-xl dark:border-b dark:border-gray-800 bg-white/80 backdrop-blur-xl shadow-sm" 
+          : "bg-transparent"
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -41,44 +45,52 @@ const Navbar = () => {
         </Link>
 
         <div className="hidden md:flex items-center space-x-8">
-          <div className="flex items-center space-x-6">
-            <NavLink href="#features">Features</NavLink>
-            <NavLink href="#how-it-works">How it Works</NavLink>
-            <NavLink href="#pricing">Pricing</NavLink>
-          </div>
-
           <div className="flex items-center space-x-4">
             <Button variant="outline" className="h-9 px-4">Sign In</Button>
             <Button className="h-9 px-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white border-0">Sign Up</Button>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              aria-label="Toggle theme"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            >
+              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </Button>
           </div>
         </div>
 
-        <button 
-          className="md:hidden" 
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? (
-            <X className="h-6 w-6" />
-          ) : (
-            <Menu className="h-6 w-6" />
-          )}
-        </button>
+        <div className="md:hidden flex items-center space-x-4">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            aria-label="Toggle theme"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          </Button>
+          <button 
+            className="md:hidden" 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
       <div 
         className={cn(
-          "fixed inset-x-0 top-[64px] p-4 bg-white/95 backdrop-blur-xl border-b z-40 md:hidden shadow-lg",
+          "fixed inset-x-0 top-[64px] p-4 dark:bg-gray-900/95 bg-white/95 backdrop-blur-xl border-b z-40 md:hidden shadow-lg",
           "transition-all duration-300 ease-in-out transform",
-          mobileMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
+          mobileMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none",
+          dark ? "border-gray-800" : "border-gray-200"
         )}
       >
-        <div className="flex flex-col space-y-4 mb-6">
-          <MobileNavLink href="#features" onClick={() => setMobileMenuOpen(false)}>Features</MobileNavLink>
-          <MobileNavLink href="#how-it-works" onClick={() => setMobileMenuOpen(false)}>How it Works</MobileNavLink>
-          <MobileNavLink href="#pricing" onClick={() => setMobileMenuOpen(false)}>Pricing</MobileNavLink>
-        </div>
         <div className="flex flex-col space-y-3">
           <Button variant="outline" className="w-full justify-center">Sign In</Button>
           <Button className="w-full justify-center bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white border-0">Sign Up</Button>
@@ -87,30 +99,5 @@ const Navbar = () => {
     </nav>
   );
 };
-
-// Helper components for nav links
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <a 
-    href={href} 
-    className="relative text-foreground/90 hover:text-foreground transition-colors duration-200 text-sm font-medium py-1"
-  >
-    {children}
-    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full" />
-  </a>
-);
-
-const MobileNavLink = ({ href, onClick, children }: { 
-  href: string; 
-  onClick?: () => void;
-  children: React.ReactNode 
-}) => (
-  <a 
-    href={href} 
-    onClick={onClick}
-    className="w-full text-foreground/90 hover:text-foreground py-2 px-2 transition-colors duration-200 text-base font-medium"
-  >
-    {children}
-  </a>
-);
 
 export default Navbar;

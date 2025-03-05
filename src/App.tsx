@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Analysis from "./pages/Analysis";
 import NotFound from "./pages/NotFound";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 // Initialize framer-motion for animations
 import { MotionConfig } from "framer-motion";
@@ -14,21 +15,23 @@ import { MotionConfig } from "framer-motion";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <MotionConfig reducedMotion="user">
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/analysis" element={<Analysis />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </MotionConfig>
+  <ThemeProvider defaultTheme="dark">
+    <MotionConfig reducedMotion="user">
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/analysis" element={<Analysis />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </MotionConfig>
+  </ThemeProvider>
 );
 
 export default App;

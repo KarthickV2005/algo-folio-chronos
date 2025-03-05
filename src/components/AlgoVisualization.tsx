@@ -89,7 +89,7 @@ const AlgoVisualization = () => {
           variants={containerVariants}
         >
           <motion.span 
-            className="inline-block px-3 py-1 text-sm font-medium text-blue-600 bg-blue-50 rounded-full mb-4"
+            className="inline-block px-3 py-1 text-sm font-medium text-blue-600 bg-blue-950/30 dark:bg-blue-900/30 rounded-full mb-4"
             variants={itemVariants}
           >
             Algorithm Visualization
@@ -101,7 +101,7 @@ const AlgoVisualization = () => {
             Time Series Analysis in Action
           </motion.h2>
           <motion.p 
-            className="text-lg text-gray-600 max-w-2xl mx-auto"
+            className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
             variants={itemVariants}
           >
             Our algorithms analyze historical patterns to predict future market movements
@@ -110,31 +110,31 @@ const AlgoVisualization = () => {
         </motion.div>
 
         <motion.div 
-          className="bg-white rounded-xl shadow-xl overflow-hidden"
+          className="bg-white dark:bg-gray-800/50 rounded-xl shadow-xl overflow-hidden dark:border dark:border-gray-700/50"
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1.0], delay: 0.2 }}
           ref={chartRef}
         >
-          <div className="p-6 border-b">
+          <div className="p-6 border-b dark:border-gray-700/50">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
               <h3 className="text-xl font-semibold">Stock Performance Prediction</h3>
               <div className="flex items-center mt-2 sm:mt-0">
                 <div className="flex items-center mr-4">
                   <div className="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
-                  <span className="text-sm text-gray-600">Actual</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">Actual</span>
                 </div>
                 <div className="flex items-center mr-4">
                   <div className="w-3 h-3 rounded-full bg-gray-400 mr-2"></div>
-                  <span className="text-sm text-gray-600">SMA</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">SMA</span>
                 </div>
                 <div className="flex items-center">
                   <div className="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
-                  <span className="text-sm text-gray-600">Predicted</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-300">Predicted</span>
                 </div>
               </div>
             </div>
-            <p className="text-sm text-gray-600">30-day analysis with 5-day prediction based on machine learning models</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">30-day analysis with 5-day prediction based on machine learning models</p>
           </div>
           
           <div className="h-[400px] p-4">
@@ -143,23 +143,35 @@ const AlgoVisualization = () => {
                 data={data}
                 margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(160, 160, 160, 0.1)" />
                 <XAxis 
                   dataKey="date" 
-                  tick={{ fontSize: 12 }} 
+                  tick={{ fontSize: 12, fill: 'currentColor' }} 
                   tickMargin={10} 
+                  stroke="currentColor"
+                  opacity={0.5}
                 />
                 <YAxis 
                   domain={['dataMin - 10', 'dataMax + 10']} 
-                  tick={{ fontSize: 12 }} 
+                  tick={{ fontSize: 12, fill: 'currentColor' }} 
                   tickMargin={10} 
+                  stroke="currentColor"
+                  opacity={0.5}
                 />
                 <Tooltip 
                   contentStyle={{ 
                     borderRadius: '0.5rem', 
                     border: 'none', 
-                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' 
+                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                    backgroundColor: 'var(--tooltip-bg, #fff)',
+                    color: 'var(--tooltip-color, #000)'
                   }} 
+                  itemStyle={{
+                    color: 'currentColor'
+                  }}
+                  labelStyle={{
+                    color: 'currentColor'
+                  }}
                 />
                 <Line 
                   type="monotone" 
@@ -205,27 +217,27 @@ const AlgoVisualization = () => {
           transition={{ delayChildren: 0.4 }}
         >
           <motion.div 
-            className="bg-white rounded-xl p-6 shadow-md"
+            className="bg-white dark:bg-gray-800/50 rounded-xl p-6 shadow-md dark:border dark:border-gray-700/50"
             variants={itemVariants}
           >
             <h3 className="text-lg font-semibold mb-2">Data Analysis</h3>
-            <p className="text-gray-600">Our algorithms process vast amounts of historical market data to identify patterns and correlations.</p>
+            <p className="text-gray-600 dark:text-gray-300">Our algorithms process vast amounts of historical market data to identify patterns and correlations.</p>
           </motion.div>
           
           <motion.div 
-            className="bg-white rounded-xl p-6 shadow-md"
+            className="bg-white dark:bg-gray-800/50 rounded-xl p-6 shadow-md dark:border dark:border-gray-700/50"
             variants={itemVariants}
           >
             <h3 className="text-lg font-semibold mb-2">Pattern Recognition</h3>
-            <p className="text-gray-600">Machine learning models identify recurring patterns and trends in market behavior.</p>
+            <p className="text-gray-600 dark:text-gray-300">Machine learning models identify recurring patterns and trends in market behavior.</p>
           </motion.div>
           
           <motion.div 
-            className="bg-white rounded-xl p-6 shadow-md"
+            className="bg-white dark:bg-gray-800/50 rounded-xl p-6 shadow-md dark:border dark:border-gray-700/50"
             variants={itemVariants}
           >
             <h3 className="text-lg font-semibold mb-2">Forecasting</h3>
-            <p className="text-gray-600">Based on historical analysis, our algorithms generate accurate price forecasts and trading signals.</p>
+            <p className="text-gray-600 dark:text-gray-300">Based on historical analysis, our algorithms generate accurate price forecasts and trading signals.</p>
           </motion.div>
         </motion.div>
       </div>

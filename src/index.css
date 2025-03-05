@@ -7,6 +7,7 @@
 
 @layer base {
   :root {
+    /* Light mode colors */
     --background: 0 0% 100%;
     --foreground: 222 47% 11%;
 
@@ -48,6 +49,7 @@
   }
 
   .dark {
+    /* Dark mode colors */
     --background: 222 47% 11%;
     --foreground: 210 40% 98%;
 
@@ -94,7 +96,7 @@
 
 @layer utilities {
   .glass {
-    @apply bg-white/80 backdrop-blur-xl border border-white/20 shadow-lg;
+    @apply bg-white/80 backdrop-blur-xl border border-white/20 shadow-lg dark:bg-gray-900/40 dark:border-gray-800/30;
   }
   
   .text-balance {
@@ -107,6 +109,14 @@
   
   .button-hover {
     @apply transition-all duration-300 hover:shadow-md active:scale-[0.98];
+  }
+
+  .dark-card {
+    @apply bg-gray-800/60 backdrop-blur-xl border border-gray-700/50 shadow-lg;
+  }
+
+  .dark-glass {
+    @apply bg-gray-900/40 backdrop-blur-xl border border-gray-800/30 shadow-lg;
   }
 }
 
