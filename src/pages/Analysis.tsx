@@ -6,7 +6,7 @@ import { ArrowLeft, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import DatePicker from "@/components/DatePicker";
 import TimeSeriesChart from "@/components/TimeSeriesChart";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 const Analysis = () => {
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
@@ -15,20 +15,12 @@ const Analysis = () => {
   
   const handleAnalysis = () => {
     if (!startDate || !endDate) {
-      toast({
-        title: "Date range required",
-        description: "Please select both start and end dates to run the analysis.",
-        variant: "destructive",
-      });
+      toast.error("Please select both start and end dates to run the analysis.");
       return;
     }
     
     if (startDate >= endDate) {
-      toast({
-        title: "Invalid date range",
-        description: "End date must be after start date.",
-        variant: "destructive",
-      });
+      toast.error("End date must be after start date.");
       return;
     }
     
@@ -37,19 +29,12 @@ const Analysis = () => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
     if (diffDays > 90) {
-      toast({
-        title: "Date range too large",
-        description: "For this demo, please select a date range of 90 days or less.",
-        variant: "destructive",
-      });
+      toast.error("For this demo, please select a date range of 90 days or less.");
       return;
     }
     
     setAnalysisStarted(true);
-    toast({
-      title: "Analysis started",
-      description: "Processing data for the selected time range.",
-    });
+    toast.success("Analysis started. Processing data for the selected time range.");
   };
   
   // Animation variants
@@ -73,7 +58,7 @@ const Analysis = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex justify-between items-center mb-8">
           <Button variant="ghost" asChild className="gap-2">
@@ -98,13 +83,13 @@ const Analysis = () => {
           variants={containerVariants}
         >
           <motion.h1 
-            className="text-3xl font-bold mb-4"
+            className="text-3xl font-bold mb-4 dark:text-white"
             variants={itemVariants}
           >
             Financial Time Series Analysis
           </motion.h1>
           <motion.p 
-            className="text-gray-600 max-w-3xl"
+            className="text-gray-600 dark:text-gray-400 max-w-3xl"
             variants={itemVariants}
           >
             Select a date range to analyze historical data and generate insights using advanced time series algorithms.
@@ -113,14 +98,14 @@ const Analysis = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <motion.div 
-            className="md:col-span-1 bg-white p-6 rounded-xl shadow-md"
+            className="md:col-span-1 bg-white dark:bg-gray-800 dark:border-gray-700 p-6 rounded-xl shadow-md"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
             <div className="flex items-center mb-6">
-              <Cpu className="h-5 w-5 text-blue-600 mr-2" />
-              <h2 className="text-xl font-semibold">Analysis Parameters</h2>
+              <Cpu className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-2" />
+              <h2 className="text-xl font-semibold dark:text-white">Analysis Parameters</h2>
             </div>
             
             <div className="space-y-6">
@@ -145,9 +130,9 @@ const Analysis = () => {
               </Button>
             </div>
             
-            <div className="mt-6 pt-6 border-t">
-              <h3 className="font-medium mb-3">Analysis Options</h3>
-              <ul className="space-y-2 text-sm text-gray-600">
+            <div className="mt-6 pt-6 border-t dark:border-gray-700">
+              <h3 className="font-medium mb-3 dark:text-white">Analysis Options</h3>
+              <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                 <li className="flex items-center">
                   <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
                   <span>Price trend analysis</span>
@@ -177,22 +162,22 @@ const Analysis = () => {
             {analysisStarted ? (
               <TimeSeriesChart startDate={startDate} endDate={endDate} />
             ) : (
-              <div className="bg-white rounded-xl shadow-lg p-10 h-full flex flex-col items-center justify-center text-center">
-                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6">
-                  <LineChartIcon className="h-8 w-8 text-blue-600" />
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-10 h-full flex flex-col items-center justify-center text-center">
+                <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 rounded-full flex items-center justify-center mb-6">
+                  <LineChartIcon className="h-8 w-8 text-blue-600 dark:text-blue-400" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Ready to Analyze</h3>
-                <p className="text-gray-600 max-w-md mb-6">
+                <h3 className="text-xl font-semibold mb-3 dark:text-white">Ready to Analyze</h3>
+                <p className="text-gray-600 dark:text-gray-400 max-w-md mb-6">
                   Select a date range and click "Run Analysis" to generate insights from historical data.
                 </p>
                 <div className="grid grid-cols-2 gap-4 w-full max-w-md">
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-sm font-medium text-gray-900">Algorithms</p>
-                    <p className="text-sm text-gray-600">ARIMA, GARCH, ML</p>
+                  <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-200">Algorithms</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">ARIMA, GARCH, ML</p>
                   </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-sm font-medium text-gray-900">Data Points</p>
-                    <p className="text-sm text-gray-600">High frequency</p>
+                  <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-200">Data Points</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">High frequency</p>
                   </div>
                 </div>
               </div>
@@ -208,51 +193,51 @@ const Analysis = () => {
             variants={containerVariants}
           >
             <motion.div 
-              className="bg-white p-6 rounded-xl shadow-md"
+              className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md"
               variants={itemVariants}
             >
-              <h3 className="font-semibold mb-2">Mean Reversion</h3>
-              <p className="text-sm text-gray-600 mb-4">Statistical tendency for prices to revert to mean</p>
-              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+              <h3 className="font-semibold mb-2 dark:text-white">Mean Reversion</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Statistical tendency for prices to revert to mean</p>
+              <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
                 <div className="h-full bg-blue-500 rounded-full" style={{ width: '65%' }}></div>
               </div>
-              <p className="text-right text-sm mt-1">65% confidence</p>
+              <p className="text-right text-sm mt-1 dark:text-gray-400">65% confidence</p>
             </motion.div>
             
             <motion.div 
-              className="bg-white p-6 rounded-xl shadow-md"
+              className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md"
               variants={itemVariants}
             >
-              <h3 className="font-semibold mb-2">Momentum</h3>
-              <p className="text-sm text-gray-600 mb-4">Continuation of existing price trends</p>
-              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+              <h3 className="font-semibold mb-2 dark:text-white">Momentum</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Continuation of existing price trends</p>
+              <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
                 <div className="h-full bg-green-500 rounded-full" style={{ width: '72%' }}></div>
               </div>
-              <p className="text-right text-sm mt-1">72% confidence</p>
+              <p className="text-right text-sm mt-1 dark:text-gray-400">72% confidence</p>
             </motion.div>
             
             <motion.div 
-              className="bg-white p-6 rounded-xl shadow-md"
+              className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md"
               variants={itemVariants}
             >
-              <h3 className="font-semibold mb-2">Seasonality</h3>
-              <p className="text-sm text-gray-600 mb-4">Cyclical patterns in time series data</p>
-              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+              <h3 className="font-semibold mb-2 dark:text-white">Seasonality</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Cyclical patterns in time series data</p>
+              <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
                 <div className="h-full bg-purple-500 rounded-full" style={{ width: '33%' }}></div>
               </div>
-              <p className="text-right text-sm mt-1">33% confidence</p>
+              <p className="text-right text-sm mt-1 dark:text-gray-400">33% confidence</p>
             </motion.div>
             
             <motion.div 
-              className="bg-white p-6 rounded-xl shadow-md"
+              className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md"
               variants={itemVariants}
             >
-              <h3 className="font-semibold mb-2">Volatility</h3>
-              <p className="text-sm text-gray-600 mb-4">Dispersion of returns for the asset</p>
-              <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+              <h3 className="font-semibold mb-2 dark:text-white">Volatility</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Dispersion of returns for the asset</p>
+              <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
                 <div className="h-full bg-red-500 rounded-full" style={{ width: '58%' }}></div>
               </div>
-              <p className="text-right text-sm mt-1">58% confidence</p>
+              <p className="text-right text-sm mt-1 dark:text-gray-400">58% confidence</p>
             </motion.div>
           </motion.div>
         )}

@@ -23,7 +23,7 @@ export function DatePicker({ date, setDate, label }: DatePickerProps) {
 
   return (
     <div className="relative">
-      <p className="text-sm font-medium mb-2">{label}</p>
+      <p className="text-sm font-medium mb-2 dark:text-gray-300">{label}</p>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -46,6 +46,7 @@ export function DatePicker({ date, setDate, label }: DatePickerProps) {
               setOpen(false);
             }}
             initialFocus
+            className="p-3 pointer-events-auto"
           />
         </PopoverContent>
       </Popover>
